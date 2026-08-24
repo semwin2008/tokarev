@@ -8,7 +8,9 @@ async def start(update: Update, context):
 
 
 async def reply(update: Update, context):
-    reply = get_model_reply(update.message.text)
+    input_text = update.message.text[8:]
+    print(f'model query, message is: {input_text}')
+    reply = get_model_reply(input_text)
     await update.message.reply_text(reply)
 
 
@@ -18,5 +20,5 @@ if __name__ == "__main__":
         TOKEN = file.readline().strip()
     app = Application.builder().token(TOKEN).build()
     app.add_handler(CommandHandler("start", start))
-    app.add_handler(MessageHandler(filters.TEXT & filters.Mention, reply))
+    app.add_handler(MessageHandler(filters.TEXT & filters.Regex(r'tokarev +'), reply))
     app.run_polling()
