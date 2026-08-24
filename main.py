@@ -18,5 +18,5 @@ if __name__ == "__main__":
         TOKEN = file.readline().strip()
     app = Application.builder().token(TOKEN).build()
     app.add_handler(CommandHandler("start", start))
-    app.add_handler(MessageHandler(filters.TEXT & filters.Mention, echo))
+    app.add_handler(MessageHandler(filters.TEXT & filters.Mention, reply))
     app.run_polling()
