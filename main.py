@@ -1,14 +1,15 @@
 from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters
+from model.model_interface import get_model_reply
 
 
 async def start(update: Update, context):
-    await update.message.reply_text("Привет!")
+    await update.message.reply_text("Я лох")
 
 
-async def echo(update: Update, context):
-    await update.message.reply_text(update.message.text)
-
+async def reply(update: Update, context):
+    reply = get_model_reply(update.message.text)
+    await update.message.reply_text(reply)
 
 
 if __name__ == "__main__":
@@ -17,5 +18,5 @@ if __name__ == "__main__":
         TOKEN = file.readline().strip()
     app = Application.builder().token(TOKEN).build()
     app.add_handler(CommandHandler("start", start))
-    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, echo))
+    app.add_handler(MessageHandler(filters.TEXT & filters.Mention, echo))
     app.run_polling()
