@@ -1,2 +1,4 @@
 data/
 .env/
+model/trainer_output/
+model/merged/
